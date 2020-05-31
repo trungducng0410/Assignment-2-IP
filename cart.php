@@ -37,36 +37,37 @@ if (isset($_SESSION['cart'])) {
         <h3>Car reservation</h3>
     </div>
     <br>
-    <?php
-    echo '<form id="checkoutForm" method="post" action="checkout.php">';
-    echo '<div class="container">
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Thumbnail</th>
-                                <th scope="col">Vehicle</th>
-                                <th scope="col">Price Per Day</th>
-                                <th scope="col">Rental Days</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>';
+    <form id="checkoutForm" method="post" action="checkout.php">
+        <div class="container">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Thumbnail</th>
+                        <th scope="col">Vehicle</th>
+                        <th scope="col">Price Per Day</th>
+                        <th scope="col">Rental Days</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($_SESSION["cart"] as $id => $item) {
+                    ?>
+                        <tr>
+                            <td class='align-middle'><img style='width: 70px; height: 70px;' class='img-thumbnail' src='./images/<?php echo $item['Model'] ?>.jpg'></td>
+                            <td class='align-middle'><?php echo $item['Brand'] . '-' . $item['Model'] . '-' . $item['Year']; ?></td>
+                            <td class='align-middle'><?php echo $item['PricePerDay']; ?>$</td>
+                            <td class='align-middle'><input name='rentalDays[]' required type='number' min='1' max='100' value=<?php echo $item['Day']; ?>></td>
+                            <td class='align-middle'><button class='btn btn-danger' type='submit' name='clearID' value='<?php echo $id; ?>' onclick="return confirm('Do you want to delete this item?')" form='deleteForm'>Delete</button></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <div class="text-right"><button type="submit" form="checkoutForm" class="btn btn-primary">Processing to Checkout</button></div>
+        </div>
+    </form>
 
-    foreach ($_SESSION["cart"] as $id => $item) {
-        echo '<tr>';
-        echo "<td class='align-middle'><img style='width: 70px; height: 70px;' class='img-thumbnail' src='./images/{$item['Model']}.jpg'></td>";
-        echo "<td class='align-middle'>{$item['Brand']}-{$item['Model']}-{$item['Year']}</td>";
-        echo "<td class='align-middle'>{$item['PricePerDay']}$</td>";
-        echo "<td class='align-middle'><input name='rentalDays[]' required type='number' min='1' max='100' value={$item['Day']}></td>";
-        echo "<td class='align-middle'><button class='btn btn-danger' type='submit' name='clearID' value='{$id}' form='deleteForm'>Delete</button></td>";
-        echo '</tr>';
-    }
-    echo '</tbody></table>';
-    echo '<div class="text-right"><button type="submit" form="checkoutForm" class="btn btn-primary">Processing to Checkout</button></div>';
-    echo '</div></form>';
-    ?>
     <form id="deleteForm" method="post" action="deleteCar.php">
-        <input hidden name="id" id="deleteId" value="">
     </form>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

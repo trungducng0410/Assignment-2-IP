@@ -1,7 +1,6 @@
 <?php
 session_start();
 $empty = !isset($_SESSION['cart']);
-// unset($_SESSION['cart']);
 ?>
 
 <!-- Bootstrap template - https://getbootstrap.com -->
