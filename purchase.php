@@ -19,8 +19,6 @@ foreach ($_SESSION["cart"] as $id => $item) {
     $msg .= "Rent days: {$item['Days']} \n";
     $msg .= "Description: {$item['Description']} \n\n";
 }
-
-print_r($msg);
 ?>
 <!DOCTYPE html>
 <html lang="en">
